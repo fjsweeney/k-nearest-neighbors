@@ -66,12 +66,28 @@ def knn(training_set, test_set, k):
     try:
         for test_instance in test_set:
             for row in training_set:
-                for x, y in zip(row[:limit], test_instance):
-                    # Euclidean distance:
-                    dist += (x-y) * (x-y)
-                distances.append(row + [sqrt(dist)])
+                # Euclidean distance:
+                #for x, y in zip(row[:limit], test_instance):
+                #    dist += (x-y) * (x-y)
+                #distances.append(row + [sqrt(dist)])
+                #dist = 0
+                # Chebyshev:
+                #for x,y in zip(row[:limit], test_instance):
+                #    dist = math.max(dist, abs(x-y))
+                #distances.append(row + [dist])
+                #dist = 0
+                # Manhattan:
+                #for x,y in zip(row[:limit], test_instance):
+                #    dist += math.abs(x-y)
+                #distances.append(row + [dist])
+                #dist = 0
+                # Hamming distance:
+                # We should use the hamming distance because the size of 'numbers' generated 
+                # by the info-sieve don't necessarily have bearing on the proximities.
+                for x,y in zip(row[:limit], test_instance):
+                    dist += bin(x^y).count('1')
+                distances.append(row + [dist])
                 dist = 0
-
             distances.sort(key=itemgetter(len(distances[0])-1))
 
             # find k nearest neighbors

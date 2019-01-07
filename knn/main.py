@@ -3,7 +3,8 @@ from sys import exit
 from math import sqrt
 from operator import itemgetter
 
-
+# What to use as the classification class? 
+# probably stress.
 def load_data_set(filename):
     try:
         with open(filename, newline='') as iris:
@@ -66,6 +67,7 @@ def knn(training_set, test_set, k):
         for test_instance in test_set:
             for row in training_set:
                 for x, y in zip(row[:limit], test_instance):
+                    # Euclidean distance:
                     dist += (x-y) * (x-y)
                 distances.append(row + [sqrt(dist)])
                 dist = 0
